@@ -10,9 +10,9 @@ var shopsRouter = require('./routes/shops');
 var app = express();
 var mongoose = require('mongoose');
 try {
-  var connection = mongoose.connect('mongodb://DESKTOP-2PG41LN:27017/medicine_shops');
+  var connection = mongoose.connect('mongodb+srv://fkca1ci15bcc:gVxJ2uuj9Nki6T79@cluster0.myyiilo.mongodb.net/medicine_shops?retryWrites=true&w=majority');
 } catch (e) {
-  console.log('connection problems');
+  console.log(e);
 }
 //console.log(connection.prototype.collections());
 
