@@ -11,9 +11,24 @@ router.get('/', function(req, res, next) {
 
 router.get('/products/:shopID', function (req, res, next) {
   var productsModel = require('../models/products');
-  var shopID = req.params.shopID;
 
-  productsModel.findOne({"shopID": shopID}).then(productsList => res.send((productsList)));
+  products = productsModel.aggregate()
+                .match({"shopID": req.params.shopID})
+                .unwind('$productsList');
+  if (req.query['sort']) {
+    var params = req.query['sort'].split('-');
+    var query = {};
+    query[`productsList.${params[0]}`] = params[1];
+    products = products.sort(query)
+  }
+  
+              
+  products.group({
+    _id: "$_id",
+    "shopID": {"$first": "$shopID"},
+    "products": {"$push" : "$productsList"}
+  })
+  .exec().then(productsList => res.send((productsList)))
 });
 
 module.exports = router;
