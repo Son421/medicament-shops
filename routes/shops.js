@@ -28,7 +28,7 @@ router.get('/products/:shopID', function (req, res, next) {
     "shopID": {"$first": "$shopID"},
     "products": {"$push" : "$productsList"}
   })
-  .exec().then(productsList => res.send((productsList)))
+  .exec().then(productsList => res.send((productsList[0])))
 });
 
 module.exports = router;

@@ -11,7 +11,7 @@ var cartSchema = new mongoose.Schema({
     }),
     products: [new mongoose.Schema({
         name: String, 
-        pricePerUnit: Number,
+        price: Number,
         quantity: Number
     })]
 });
